@@ -1,0 +1,16 @@
+# Project configuration for the LLMOps course, filled in for victor-bot-2@cauchy.io at onboarding.
+# Every value below was provisioned for you in the course workspace; you configure nothing.
+
+# Your usage policy: set it on every serverless job, endpoint and app you create.
+usage_policy_id: "30ececf2-c550-38b3-9b3c-c46059666a89"
+
+# Development environment, the one environment this course uses
+dev:
+  catalog: "victor_bot_2"
+  schema: "arxiv"
+  volume: "arxiv_files"
+  llm_endpoint: "course_ops.gateway.chat"
+  embedding_endpoint: "databricks-gte-large-en"
+  vector_search_endpoint: "vs-llmops"
+  warehouse_id: "8e01fc339724142c"
+  experiment_path: "/Users/victor-bot-2@cauchy.io/llmops"
