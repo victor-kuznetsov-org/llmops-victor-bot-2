@@ -1,6 +1,6 @@
 # llmops-victor-bot-2
 
-Your repository for the LLMOps course on Databricks, victor-bot-2@cauchy.io. Everything you need in
+Your repository for the LLMOps course on Databricks. Everything you need in
 the course workspace was provisioned for you before you got this repo, and every id is already in
 `project_config.yml`: you configure nothing.
 
@@ -8,9 +8,10 @@ the course workspace was provisioned for you before you got this repo, and every
 
 | What | Value |
 |---|---|
-| Catalog | `victor_bot_2` |
-| Course schema | `victor_bot_2.arxiv` |
-| Volume | `victor_bot_2.arxiv.arxiv_files` |
+| Your schema in development, which you manage | `llmops_dev.victor_bot_2` |
+| Your schema in acceptance, which you read | `llmops_acc.victor_bot_2` |
+| Your schema in production, which you read | `llmops_prd.victor_bot_2` |
+| Volume, in each of them | `arxiv_files`, such as `llmops_dev.victor_bot_2.arxiv_files` |
 | SQL warehouse id | `8e01fc339724142c` |
 | Usage policy id | `30ececf2-c550-38b3-9b3c-c46059666a89` |
 | MLflow experiment | `/Users/victor-bot-2@cauchy.io/llmops` |
@@ -44,16 +45,22 @@ the course pins in `pyproject.toml`.
   commit again. In these folders only, five rules that the course's notebooks break and ruff cannot
   fix are off; `pyproject.toml` names them, and also tells ruff that `display` and `spark` exist
   without an import, as they do in a Databricks notebook, everywhere in the repo.
-- `databricks.yml` and `resources/`: the bundle. It builds the package as a wheel with `uv build` and
-  deploys the `hello` job, one serverless notebook task that installs the wheel and writes one row to
-  `victor_bot_2.arxiv.hello`.
+- `databricks.yml` and `resources/`: the bundle, with three targets, `dev` (your sandbox, in
+  development mode, the default), `acc` and `prd`. It builds the package as a wheel with `uv build`
+  and deploys the `hello` job, named after its target (`job-hello-victor-bot-2-dev`,
+  `-acc`, `-prd`), one serverless notebook task that installs the wheel and writes one row to the
+  `hello` table of your schema in the target's catalog, such as
+  `llmops_dev.victor_bot_2.hello`.
 - `pyproject.toml` and `version.txt`: the package and its version, bumped as the lectures ask.
 - `tests/`: your tests; `test_config.py` checks that `project_config.yml` loads.
 - `.github/workflows/ci.yml`: on every pull request and push to `main`, installs the package with
   uv and runs the pre-commit hooks and the tests.
-- `.github/workflows/deploy.yml`: on every push to `main`, deploys the bundle as your own deploy
-  principal `sp-deploy-victor-bot-2`, signed in by OpenID Connect: there is no
-  secret, and the job runs as that principal with your usage policy.
+- `.github/workflows/deploy.yml`: deploys the bundle, one job per target, each as that target's own
+  deploy principal, signed in by OpenID Connect through the GitHub environment of the same name:
+  there is no secret, and the job runs as that principal with your usage policy. A push to `main`
+  deploys `acc`, then `prd` once you approve it; run the workflow by hand to deploy one target. A
+  target whose principal does not exist yet is skipped, and the job "no principal yet" names it.
+- `.github/CODEOWNERS`: who reviews a pull request to `main`, which needs one approving review.
 
 ## Getting started
 
