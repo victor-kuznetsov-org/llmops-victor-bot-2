@@ -14,7 +14,7 @@ the course workspace was provisioned for you before you got this repo, and every
 | Volume, in each of them | `arxiv_files`, such as `llmops_dev.victor_bot_2.arxiv_files` |
 | SQL warehouse id | `8e01fc339724142c` |
 | Usage policy id | `30ececf2-c550-38b3-9b3c-c46059666a89` |
-| MLflow experiment | `/Users/victor-bot-2@cauchy.io/llmops` |
+| MLflow experiment | `/llmops/victor_bot_2` |
 | LLM endpoint | `course_ops.gateway.chat` |
 | Embedding endpoint | `databricks-gte-large-en` |
 | Vector Search endpoint | `vs-llmops` |
@@ -50,7 +50,9 @@ the course pins in `pyproject.toml`.
   and deploys the `hello` job, named after its target (`job-hello-victor-bot-2-dev`,
   `-acc`, `-prd`), one serverless notebook task that installs the wheel and writes one row to the
   `hello` table of your schema in the target's catalog, such as
-  `llmops_dev.victor_bot_2.hello`.
+  `llmops_dev.victor_bot_2.hello`. The course's onboarding
+  gives you `CAN_MANAGE` on the `dev` job and `CAN_VIEW` on the `acc` and `prd` ones once they are
+  deployed, so no file of this public repo names you.
 - `pyproject.toml` and `version.txt`: the package and its version, bumped as the lectures ask.
 - `tests/`: your tests; `test_config.py` checks that `project_config.yml` loads.
 - `.github/workflows/ci.yml`: on every pull request and push to `main`, installs the package with
